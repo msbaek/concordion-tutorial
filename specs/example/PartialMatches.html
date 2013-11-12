@@ -1,0 +1,44 @@
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<body>
+<h1>Partial Matches</h1>
+<p>
+    Username는 부분적으로 매칭되는 결과를 반환한다. 아래의 예에서는 "arr"이 포함된 모든 username이 반환된다.
+</p>
+<div class="example">
+    <h3>예</h3>
+    <p>아래와 같은 user들이 존재할때:</p>
+
+    <table concordion:execute="setUpUser(#username)">
+        <tr>
+            <th concordion:set="#username">Username</th>
+        </tr>
+        <tr>
+            <td>john.lennon</td>
+        </tr>
+        <tr>
+            <td>ringo.starr</td>
+        </tr>
+        <tr>
+            <td>george.harrison</td>
+        </tr>
+        <tr>
+            <td>paul.mccartney</td>
+        </tr>
+    </table>
+
+    <p>"<b concordion:set="#searchString">arr</b>"이 포함된 user를 검색하면 아래와 같은 결과를 반환한다:</p>
+
+    <table concordion:verifyRows="#username : getSearchResultsFor(#searchString)">
+        <tr>
+            <th concordion:assertEquals="#username">Matching Usernames</th>
+        </tr>
+        <tr>
+            <td>george.harrison</td>
+        </tr>
+        <tr>
+            <td>ringo.starr</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
