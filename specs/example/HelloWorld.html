@@ -1,5 +1,8 @@
 <html xmlns:concordion="http://www.concordion.org/2007/concordion">
 <body>
-    <p concordion:assertEquals="getGreeting()">Hello World!</p>
+<p>
+    사용자 <span concordion:set="#firstName">Bob</span>에 대한 인사말은:
+    <span concordion:assertEquals="greetingFor(#firstName)">Hello Bob!</span>이다
+</p>
 </body>
 </html>

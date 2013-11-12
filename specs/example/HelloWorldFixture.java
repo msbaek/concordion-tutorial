@@ -8,4 +8,8 @@ public class HelloWorldFixture {
     public String getGreeting() {
         return "Hello World!";
     }
+
+    public String greetingFor(String firstName) {
+        return String.format("Hello %s!", firstName);
+    }
 }

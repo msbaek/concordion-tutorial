@@ -70,3 +70,37 @@ public class HelloWorldFixture {
 
 ![성공화면](images/HelloWorld.html-success.png)
 
+## concordion:set
+
+```
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<body>
+    <p>
+        사용자 Bob에 대한 인사말은: Hello Bob!이다
+    </p>
+</body>
+</html>
+```
+
+위와 같은 문장에서 "Bob"은 파라미터로 처리되기를 원한다. 이를 위해서 ```<span>``` 태그와 ```concordion:set```으로 instrument한다.
+
+```
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+<body>
+<p>
+    사용자 <span concordion:set="#firstName">Bob</span>에 대한 인사말은:
+    <span concordion:assertEquals="greetingFor(#firstName)">Hello Bob!</span>이다
+</p>
+</body>
+</html>
+```
+
+위와 같이 지정하면 Bob이 #firstName이라는 임시 변수에 저장된다.
+
+이 테스트를 만족시키기 위해서 아래와 같이 메소드를 추가한다.
+
+```
+public String greetingFor(String firstName) {
+    return String.format("Hello %s!", firstName);
+}
+```
