@@ -221,3 +221,11 @@ public class SplittingNamesFixture {
 ### [Handling unusual sentence structures.](http://www.concordion.org/Tutorial.html#executeUnusualSentences)
 
 이 경우는 별로 중요치 않은 듯. 필요하면 링크를 통해 확인하시길...
+
+## concordion:execute on a \<table>
+
+git diff 참조
+
+## concordion:verifyRows
+
+git diff 참조
