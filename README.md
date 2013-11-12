@@ -104,3 +104,120 @@ public String greetingFor(String firstName) {
     return String.format("Hello %s!", firstName);
 }
 ```
+
+## concordion:execute
+
+아래와 같은 3가지 용도로 사용된다.
+
+### 1/3. Executing an instruction with a "void" result.
+
+```
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+    <body>
+        <p>
+            만일 현재 시간이
+		    <span concordion:execute="setCurrentTime(#TEXT)">09:00AM</span>이면
+		    greeting은
+		    <span concordion:assertEquals="getGreeting()">Good Morning World!</span>여야 한다.
+        </p>
+    </body>
+</html>
+```
+
+```
+package example;
+
+@RunWith(ConcordionRunner.class)
+public class HelloWorldFixture {
+    private String currentTime;
+
+    public String getGreeting() {
+        if("09:00AM".equals(currentTime))
+            return "Good Morning World!";
+        return "Hello World!";
+    }
+
+    public void setCurrentTime(String currentTime) {
+        this.currentTime = currentTime;
+    }
+}
+```
+
+아래와 같이 ```#TEXT```를 이용해서 축약할 수 있다.
+
+```
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+    <body>
+        <p>
+		    만일 현재 시간이
+		    <span concordion:execute="setCurrentTime(#TEXT)">09:00AM</span>이면
+		    greeting은
+		    <span concordion:assertEquals="getGreeting()">Good Morning World!</span>여야 한다.
+        </p>
+    </body>
+</html>
+```
+
+### 2/3 Executing an instruction with an object result (to allow multiple properties of the object to be checked).
+
+```
+<html xmlns:concordion="http://www.concordion.org/2007/concordion">
+
+    <head>
+        <link href="../concordion.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+
+        <h1>Splitting Names</h1>
+
+        <p>
+            메일 보내기 개인화를 위해 고객의 성과 이름이 필요하다. 하지만 고객 데이터는 성과 이름이
+		    합쳐진 채로 저장하고 있다.
+        </p>
+
+        <p>
+            그래서 시스템은 성과 이름으로 합쳐진 이름에서 공백을 이용해서 성과 이름을 분리해야 한다.
+        </p>
+
+        <div class="example">
+
+            <h3>예제</h3>
+
+            <p>
+                전체 이름
+		        <span concordion:execute="#result = split(#TEXT)">John Smith</span>는
+        		이름
+		        <span concordion:assertEquals="#result.firstName">John</span>과
+		        성
+		        <span concordion:assertEquals="#result.lastName">Smith</span>.
+        		로 분리된다.
+            </p>
+        </div>
+    </body>
+</html>
+```
+
+```
+package example;
+
+import org.concordion.integration.junit4.ConcordionRunner;
+import org.junit.runner.RunWith;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RunWith(ConcordionRunner.class)
+public class SplittingNamesFixture {
+    public Map<String, String> split(String fullName) {
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("firstName", fullName.split(" ")[0]);
+        result.put("lastName", fullName.split(" ")[1]);
+        return result;
+    }
+}
+```
+
+### [Handling unusual sentence structures.](http://www.concordion.org/Tutorial.html#executeUnusualSentences)
+
+이 경우는 별로 중요치 않은 듯. 필요하면 링크를 통해 확인하시길...
